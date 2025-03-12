@@ -24,5 +24,11 @@ class offer extends Model
         'user_id',
     ];
 
+    public function user()
+    {
+        return $this->belongsToMany(User::class,'applications');
+    }
+
+
     
 }

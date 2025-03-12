@@ -36,3 +36,5 @@ Route::post('login', [UserAuthController::class, 'login']);
 // Logout endpoint - revoke the user's current access token
 // Protected by authentication to ensure only logged-in users can logout
 Route::post('logout', [UserAuthController::class, 'logout'])->middleware('auth:sanctum');
+
+

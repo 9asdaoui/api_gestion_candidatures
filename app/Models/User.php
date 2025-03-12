@@ -23,6 +23,11 @@ class User extends Authenticatable
         'password',
     ];
 
+    public function offers()
+    {
+        return $this->belongsToMany(Offer::class,'applications');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
