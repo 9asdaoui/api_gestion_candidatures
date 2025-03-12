@@ -16,25 +16,17 @@ use App\Http\Controllers\UserAuthController;
 |
 */
 
-// Get authenticated user information
-// This route returns the currently logged-in user's details
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Job offers resource routes (index, store, show, update, destroy)
-// Protected by authentication to ensure only logged-in users can access
-Route::apiResource('offers', OfferController::class)->middleware('auth:sanctum');
 
-// User authentication endpoints
-// Register a new user account with email, password, etc.
 Route::post('register', [UserAuthController::class, 'register']);
-
-// Login endpoint - authenticate user and return access token
 Route::post('login', [UserAuthController::class, 'login']);
-
-// Logout endpoint - revoke the user's current access token
-// Protected by authentication to ensure only logged-in users can logout
 Route::post('logout', [UserAuthController::class, 'logout'])->middleware('auth:sanctum');
 
+Route::apiResource('offers', OfferController::class)->middleware('auth:sanctum');
+
+Route::get('profile', [App\Http\Controllers\UserProfileController::class, 'show'])->middleware('auth:sanctum');
+Route::put('profile', [App\Http\Controllers\UserProfileController::class, 'update'])->middleware('auth:sanctum');
 
