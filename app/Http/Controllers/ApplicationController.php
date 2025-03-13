@@ -53,13 +53,21 @@ class ApplicationController extends Controller
             'resume' => 'required|file|mimes:pdf,doc,docx|max:2048',
         ]);
 
-        $resumePath = $request->file('resume')->store('resumes', 'public');
+        try {
+            $resumePath = $request->file('resume')->store('resumes', 'public');
+            
+            if (!$resumePath) {
+                return response()->json(['message' => 'Failed to save resume file'], 500);
+            }
 
-        $application = Application::create([
-            'offer_id' => $request->offer_id,
-            'user_id' => $request->user_id,
-            'resume_path' => $resumePath
-        ]);
+            $application = Application::create([
+                'offer_id' => $request->offer_id,
+                'user_id' => $request->user_id,
+                'resume_path' => $resumePath
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error saving file: ' . $e->getMessage()], 500);
+        }
 
         return response()->json($application, 201);
     }
@@ -102,6 +110,12 @@ class ApplicationController extends Controller
         if (!$application) {
             return response()->json(['message' => 'Application not found'], 404);
         }
-        return response()->download(public_path('storage/' . $application->resume_path));
+        
+        $filePath = public_path('storage/' . $application->resume_path);
+        if (!file_exists($filePath)) {
+            return response()->json(['message' => 'Resume file not found'], 404);
+        }
+        
+        return response()->download($filePath);
     }
 }
