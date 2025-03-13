@@ -29,6 +29,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Offer::class,'applications');
     }
 
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

@@ -7,10 +7,19 @@ use App\Http\Requests\StoreofferRequest;
 use App\Http\Requests\UpdateofferRequest;
 use Illuminate\Http\Request;
 
+/**
+ * Controller for managing job offers
+ */
 class OfferController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * 
+     * @OA\Get(
+     *     path="/api/offers",
+     *     summary="List all offers",
+     *     @OA\Response(response=200, description="Successful")
+     * )
      */
     public function index()
     {
@@ -21,6 +30,13 @@ class OfferController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * 
+     * @OA\Post(
+     *     path="/api/offers",
+     *     summary="Create a new offer",
+     *     @OA\Response(response=201, description="Offer created"),
+     *     @OA\Response(response=422, description="Validation error")
+     * )
      */
     public function store(Request $request)
     {
@@ -46,6 +62,19 @@ class OfferController extends Controller
 
     /**
      * Display the specified resource.
+     * 
+     * @OA\Get(
+     *     path="/api/offers/{offer}",
+     *     summary="Get a specific offer",
+     *     @OA\Parameter(
+     *         name="offer",
+     *         in="path",
+     *         required=true,
+     *         description="Offer ID"
+     *     ),
+     *     @OA\Response(response=200, description="Successful"),
+     *     @OA\Response(response=404, description="Not found")
+     * )
      */
     public function show(offer $offer)
     {
@@ -54,6 +83,20 @@ class OfferController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * 
+     * @OA\Put(
+     *     path="/api/offers/{offer}",
+     *     summary="Update an existing offer",
+     *     @OA\Parameter(
+     *         name="offer",
+     *         in="path",
+     *         required=true,
+     *         description="Offer ID"
+     *     ),
+     *     @OA\Response(response=200, description="Successful"),
+     *     @OA\Response(response=404, description="Not found"),
+     *     @OA\Response(response=422, description="Validation error")
+     * )
      */
     public function update(UpdateofferRequest $request, offer $offer)
     {
@@ -64,6 +107,19 @@ class OfferController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * 
+     * @OA\Delete(
+     *     path="/api/offers/{offer}",
+     *     summary="Delete an offer",
+     *     @OA\Parameter(
+     *         name="offer",
+     *         in="path",
+     *         required=true,
+     *         description="Offer ID"
+     *     ),
+     *     @OA\Response(response=200, description="Successful"),
+     *     @OA\Response(response=404, description="Not found")
+     * )
      */
     public function destroy(offer $offer)
     {

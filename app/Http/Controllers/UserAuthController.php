@@ -6,9 +6,21 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * Controller for user authentication
+ */
+
+ 
 class UserAuthController extends Controller
 {
-    
+    /**
+     * @OA\Post(
+     *     path="/api/register",
+     *     summary="Register a new user",
+     *     @OA\Response(response=200, description="User created successfully"),
+     *     @OA\Response(response=422, description="Validation error")
+     * )
+     */
     public function register(Request $request){
         $registerUserData = $request->validate([
             'name'=>'required|string',
@@ -25,6 +37,14 @@ class UserAuthController extends Controller
         ]);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/login",
+     *     summary="Authenticate user and generate token",
+     *     @OA\Response(response=200, description="Login successful"),
+     *     @OA\Response(response=401, description="Invalid credentials")
+     * )
+     */
     public function login(Request $request){
 
         $loginUserData = $request->validate([
@@ -46,6 +66,13 @@ class UserAuthController extends Controller
         ]);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/logout",
+     *     summary="Logout user and invalidate tokens",
+     *     @OA\Response(response=200, description="Logged out successfully")
+     * )
+     */
     public function logout(Request $request){
         
         $request->user()->tokens()->delete();

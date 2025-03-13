@@ -6,10 +6,28 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
+/**
+ * Controller for managing user profile  
+ */
 class UserProfileController extends Controller
 {
     /**
      * Display the authenticated user's profile
+     * 
+     * @OA\Get(
+     *     path="/api/profile",
+     *     summary="Get authenticated user profile",
+     *     tags={"Profile"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="User profile data"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated"
+     *     )
+     * )
      */
     public function show(Request $request)
     {
@@ -19,6 +37,35 @@ class UserProfileController extends Controller
 
     /**
      * Update the authenticated user's profile
+     * 
+     * @OA\Put(
+     *     path="/api/profile",
+     *     summary="Update user profile information",
+     *     tags={"Profile"},
+     *     security={{"sanctum":{}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="User profile data",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="name", type="string"),
+     *             @OA\Property(property="email", type="string"),
+     *             @OA\Property(property="password", type="string"),
+     *             @OA\Property(property="phone", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Profile updated successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated"
+     *     )
+     * )
      */
     public function update(Request $request)
     {

@@ -1,0 +1,322 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Candidate Management API",
+        "description": "API for managing job offers and applications",
+        "contact": {
+            "name": "API Support",
+            "email": "your-email@example.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://my-default-host.com",
+            "description": "API Server"
+        }
+    ],
+    "paths": {
+        "/api/applications/{id}": {
+            "get": {
+                "summary": "Get application by ID",
+                "operationId": "063830ab6918716412802601f8384a05",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful"
+                    },
+                    "404": {
+                        "description": "Application not found"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete an application",
+                "operationId": "528c6aed37725fba247b8441d8f3f9b6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Application deleted"
+                    },
+                    "404": {
+                        "description": "Application not found"
+                    }
+                }
+            }
+        },
+        "/api/applications": {
+            "post": {
+                "summary": "Create a new application",
+                "operationId": "838ab9ccbecd19fc861d7a1e17c865ba",
+                "responses": {
+                    "201": {
+                        "description": "Application created"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/showResume/{id}": {
+            "get": {
+                "summary": "Download application resume",
+                "operationId": "905752fc69994629f4db145f0a1c441b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Resume downloaded"
+                    },
+                    "404": {
+                        "description": "Application not found"
+                    }
+                }
+            }
+        },
+        "/api/offers": {
+            "get": {
+                "summary": "List all offers",
+                "description": "Display a listing of the resource.",
+                "operationId": "3a56496f000faffd87f42c4036770f0e",
+                "responses": {
+                    "200": {
+                        "description": "Successful"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create a new offer",
+                "description": "Store a newly created resource in storage.",
+                "operationId": "4b4cc5dac461b7ed0b8d56a8a2ce22d2",
+                "responses": {
+                    "201": {
+                        "description": "Offer created"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/offers/{offer}": {
+            "get": {
+                "summary": "Get a specific offer",
+                "description": "Display the specified resource.",
+                "operationId": "15f5327f8c5f925d892965a098a26027",
+                "parameters": [
+                    {
+                        "name": "offer",
+                        "in": "path",
+                        "description": "Offer ID",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update an existing offer",
+                "description": "Update the specified resource in storage.",
+                "operationId": "d065775809273c286b7eb92c3ee32dc3",
+                "parameters": [
+                    {
+                        "name": "offer",
+                        "in": "path",
+                        "description": "Offer ID",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete an offer",
+                "description": "Remove the specified resource from storage.",
+                "operationId": "e4e44a826ea897849a6af183eb06843f",
+                "parameters": [
+                    {
+                        "name": "offer",
+                        "in": "path",
+                        "description": "Offer ID",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/register": {
+            "post": {
+                "summary": "Register a new user",
+                "operationId": "c0354e671ce642c7b4ff996bc4e475a0",
+                "responses": {
+                    "200": {
+                        "description": "User created successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "summary": "Authenticate user and generate token",
+                "operationId": "dde0e6a0694ae97f804fba7d40433c68",
+                "responses": {
+                    "200": {
+                        "description": "Login successful"
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "summary": "Logout user and invalidate tokens",
+                "operationId": "0b6b00e1e436126529647bb1b75c02d9",
+                "responses": {
+                    "200": {
+                        "description": "Logged out successfully"
+                    }
+                }
+            }
+        },
+        "/api/profile": {
+            "get": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Get authenticated user profile",
+                "description": "Display the authenticated user's profile",
+                "operationId": "a77499755a79e5a8b1562005ca8de76e",
+                "responses": {
+                    "200": {
+                        "description": "User profile data"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Update user profile information",
+                "description": "Update the authenticated user's profile",
+                "operationId": "59942ee7f602a641859d6136622daca6",
+                "requestBody": {
+                    "description": "User profile data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Profile updated successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "sanctum": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Profile",
+            "description": "Profile"
+        }
+    ]
+}
