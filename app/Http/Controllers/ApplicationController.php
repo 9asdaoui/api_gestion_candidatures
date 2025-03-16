@@ -112,7 +112,9 @@ class ApplicationController extends Controller
         }
         
         $filePath = public_path('storage/' . $application->resume_path);
+        
         if (!file_exists($filePath)) {
+            echo $filePath;
             return response()->json(['message' => 'Resume file not found'], 404);
         }
         
