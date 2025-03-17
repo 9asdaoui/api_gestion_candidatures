@@ -17,9 +17,9 @@ class ApplicationFactory extends Factory
     public function definition(): array
     {
         return [
-            'offer_id' => $this->faker->numberBetween(1, 10),
-            'user_id' => $this->faker->numberBetween(1, 10),
-            'resume_path' => $this->faker->word() . '.pdf',
+            'offer_id' => $this->fake()->numberBetween(1, 10),
+            'user_id' => $this->fake()->numberBetween(1, 10),
+            'resume_path' => $this->fake()->word() . '.pdf',
         ];
     }
 }

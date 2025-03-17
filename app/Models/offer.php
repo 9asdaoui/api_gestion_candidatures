@@ -24,16 +24,5 @@ class offer extends Model
         'user_id',
     ];
 
-    public function user()
-    {
-        return $this->belongsToMany(User::class,'applications');
-    }
 
-    public function applications()
-    {
-        return $this->hasMany(Application::class);
-    }
-
-
-    
 }

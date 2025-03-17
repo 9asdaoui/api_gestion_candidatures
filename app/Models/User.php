@@ -24,14 +24,14 @@ class User extends Authenticatable
         'phone',
     ];
 
-    public function offers()
+    public function roles()
     {
-        return $this->belongsToMany(Offer::class,'applications');
+        return $this->hasOne(Role::class);
     }
 
-    public function applications()
+    public function competences()
     {
-        return $this->hasMany(Application::class);
+        return $this->belongsToMany(Competence::class, 'usercompetence');
     }
 
     /**
