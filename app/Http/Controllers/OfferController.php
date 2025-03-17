@@ -98,8 +98,23 @@ class OfferController extends Controller
      *     @OA\Response(response=422, description="Validation error")
      * )
      */
-    public function update(UpdateofferRequest $request, offer $offer)
+    public function update(Request  $request, offer $offer)
     {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'company_name' => 'required|string|max:255',
+            'location' => 'required|string|max:255',
+            'salary' => 'nullable|numeric',
+            'employment_type' => 'required|in:Full-time,Part-time,Contract,Freelance,Internship',
+            'experience_level' => 'nullable|in:Entry-level,Mid-level,Senior,Manager,Executive',
+            'required_skills' => 'nullable|json',
+            'deadline' => 'nullable|date',
+            'is_active' => 'boolean',
+            'image' => 'nullable|string|max:255',
+            'user_id' => 'required|exists:users,id',
+        ]);
+
         $offer->update($request->all());
 
         return response()->json($offer);

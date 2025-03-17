@@ -25,15 +25,20 @@ class UserAuthController extends Controller
         $registerUserData = $request->validate([
             'name'=>'required|string',
             'email'=>'required|string|email|unique:users',
-            'password'=>'required|min:8'
+            'password'=>'required|min:8',
+            'role_id' => 'required|exists:roles,id',
+
         ]);
         $user = User::create([
             'name' => $registerUserData['name'],
             'email' => $registerUserData['email'],
             'password' => Hash::make($registerUserData['password']),
+            'role_id' => $registerUserData['role_id'],
+
         ]);
         return response()->json([
             'message' => 'User Created ',
+            'user' => $user,
         ]);
     }
 
@@ -49,7 +54,8 @@ class UserAuthController extends Controller
 
         $loginUserData = $request->validate([
             'email'=>'required|string|email',
-            'password'=>'required|min:8'
+            'password'=>'required|min:8',
+
         ]);
 
         if(!$token = auth()->attempt($loginUserData)){
