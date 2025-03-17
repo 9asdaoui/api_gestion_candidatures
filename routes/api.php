@@ -18,19 +18,19 @@ use App\Http\Controllers\UserProfileController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
 
 Route::post('register', [UserAuthController::class, 'register']);
 Route::post('login', [UserAuthController::class, 'login']);
-Route::post('logout', [UserAuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::post('logout', [UserAuthController::class, 'logout'])->middleware('auth:api');
 
-Route::apiResource('offers', OfferController::class)->middleware('auth:sanctum');
+Route::apiResource('offers', OfferController::class)->middleware('auth:api');
 
-Route::get('profile', [UserProfileController::class, 'show'])->middleware('auth:sanctum');
-Route::put('profile', [UserProfileController::class, 'update'])->middleware('auth:sanctum');
+Route::get('profile', [UserProfileController::class, 'show'])->middleware('auth:api');
+Route::put('profile', [UserProfileController::class, 'update'])->middleware('auth:api');
 
 
 Route::get('applications', [ApplicationController::class, 'index']);

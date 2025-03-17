@@ -52,14 +52,12 @@ class UserAuthController extends Controller
             'password'=>'required|min:8'
         ]);
 
-        $user = User::where('email',$loginUserData['email'])->first();
-        if(!$user || !Hash::check($loginUserData['password'],$user->password)){
+        if(!$token = auth()->attempt($loginUserData)){
             return response()->json([
                 'message' => 'Invalid Credentials'
             ],401);
         }
 
-        $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
         return response()->json([
             'message' => 'Logged In',
             'access_token' => $token,
@@ -73,9 +71,10 @@ class UserAuthController extends Controller
      *     @OA\Response(response=200, description="Logged out successfully")
      * )
      */
-    public function logout(Request $request){
+    public function logout(){
         
-        $request->user()->tokens()->delete();
+        auth()->logout();
+        
         return response()->json([
             'message' => 'Logged Out'
         ]);
