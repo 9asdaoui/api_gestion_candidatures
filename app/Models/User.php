@@ -16,6 +16,30 @@ class User extends Authenticatable implements JWTSubject
         'password' => 'hashed',
     ];
 
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'role_id',
+        'phone',
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function offers()
+    {
+        return $this->hasMany(Offer::class);
+    }
+
+
         /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *

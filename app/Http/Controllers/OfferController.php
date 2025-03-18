@@ -40,6 +40,9 @@ class OfferController extends Controller
      */
     public function store(Request $request)
     {
+
+        $user = $request->user();
+
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
@@ -100,6 +103,7 @@ class OfferController extends Controller
      */
     public function update(Request  $request, offer $offer)
     {
+
         
         $request->validate([
             'title' => 'required|string|max:255',
@@ -118,7 +122,7 @@ class OfferController extends Controller
         $offer->update($request->all());
 
         return response()->json([
-           'offer' => $offer,
+           'offer' => "offer",
         ],201);
     }
 

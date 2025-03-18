@@ -27,7 +27,7 @@ Route::post('register', [UserAuthController::class, 'register']);
 Route::post('login', [UserAuthController::class, 'login']);
 Route::post('logout', [UserAuthController::class, 'logout'])->middleware('auth:api');
 
-Route::apiResource('offers', OfferController::class)->middleware('auth:api');
+Route::apiResource('offers', OfferController::class);
 
 // Route::get('offers', [OfferController::class, 'index']);
 // Route::post('offers', [OfferController::class, 'store']);
