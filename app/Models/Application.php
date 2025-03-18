@@ -25,10 +25,4 @@ class Application extends Model
         return $this->belongsTo(Offer::class);
     }
 
-    public function getResumeUrlAttribute()
-    {
-        return asset('storage/' . $this->resume_path);
-    }
-
-    
 }
