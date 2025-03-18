@@ -18,7 +18,7 @@ use App\Http\Controllers\UserProfileController;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::get('/user', function (Request $request) {
     return $request->user();
 });
 
@@ -28,6 +28,12 @@ Route::post('login', [UserAuthController::class, 'login']);
 Route::post('logout', [UserAuthController::class, 'logout'])->middleware('auth:api');
 
 Route::apiResource('offers', OfferController::class)->middleware('auth:api');
+
+// Route::get('offers', [OfferController::class, 'index']);
+// Route::post('offers', [OfferController::class, 'store']);
+// Route::get('offers/{offer}', [OfferController::class, 'show']);
+// Route::put('offers/{offer}', [OfferController::class, 'update']);
+// Route::delete('offers/{offer}', [OfferController::class, 'destroy']);
 
 Route::get('profile', [UserProfileController::class, 'show'])->middleware('auth:api');
 Route::put('profile', [UserProfileController::class, 'update'])->middleware('auth:api');
