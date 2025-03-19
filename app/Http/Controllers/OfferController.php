@@ -25,7 +25,6 @@ class OfferController extends Controller
     public function index()
     {
         $offers = Offer::all();
-        // return $offers;
         return response()->json($offers);
     }
 
@@ -41,10 +40,7 @@ class OfferController extends Controller
      */
     public function store(Request $request)
     {
-
-        $user = $request->user();
-
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'company_name' => 'required|string|max:255',
@@ -56,12 +52,21 @@ class OfferController extends Controller
             'deadline' => 'nullable|date',
             'is_active' => 'boolean',
             'image' => 'nullable|string|max:255',
-            'user_id' => 'required|exists:users,id',
-        ]);
+            ]);
 
-        $offer = Offer::create($request->all());
+        try {
+            $user = $request->user();
 
-        return $offer;
+            $validated['user_id'] = $user->id;
+
+            $offer = Offer::create($validated);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
+
+        return response()->json([
+            'offer' => $offer,
+        ], 201);
     }
 
     /**
@@ -104,14 +109,8 @@ class OfferController extends Controller
      */
     public function update(Request  $request, offer $offer)
     {
-
-        // $user=$request->user();
-
-        // if($user->id != $offer->user_id){
-        //      abort(401);
-        // }
-
-        $this->authorize('update','offer');
+             
+        $this->authorize('update', $offer);
 
         $validated =  $request->validate([
             'title' => 'required|string|max:255',
@@ -152,6 +151,8 @@ class OfferController extends Controller
      */
     public function destroy(offer $offer)
     {
+        $this->authorize('delete', $offer); 
+
         $offer->delete();
 
         return response()->json(['message' => 'Offer deleted successfully'], 200);

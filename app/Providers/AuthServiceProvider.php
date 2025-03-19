@@ -16,6 +16,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Offer::class => OfferPolicy::class,
+        
     ];
 
     /**

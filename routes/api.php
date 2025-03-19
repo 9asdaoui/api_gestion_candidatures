@@ -19,9 +19,7 @@ use App\Http\Controllers\CompetenceController;
 |
 */
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/user', function (Request $request) {return $request->user();});
 
 
 Route::post('register', [UserAuthController::class, 'register']);
@@ -30,16 +28,11 @@ Route::post('logout', [UserAuthController::class, 'logout'])->middleware('auth:a
 
 Route::apiResource('offers', OfferController::class)->middleware('auth:api');
 
-
 Route::apiResource('competences', CompetenceController::class)->middleware('auth:api');
+
 Route::apiResource('applications', ApplicationController::class)->middleware('auth:api');
 
 Route::get('showResume/{id}', [ApplicationController::class, 'showResume'])->middleware('auth:api');
-
-// Route::get('offers', [OfferController::class, 'index']);
-// Route::post('offers', [OfferController::class, 'store']);
-// Route::put('offers/{offer}', [OfferController::class, 'update']);
-// Route::delete('offers/{offer}', [OfferController::class, 'destroy']);
 
 Route::get('profile', [UserProfileController::class, 'show'])->middleware('auth:api');
 Route::put('profile', [UserProfileController::class, 'update'])->middleware('auth:api');
