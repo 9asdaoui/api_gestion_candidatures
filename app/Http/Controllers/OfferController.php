@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\offer;
 use App\Http\Requests\StoreofferRequest;
 use App\Http\Requests\UpdateofferRequest;
+use App\Models\Offer as ModelsOffer;
 use Illuminate\Http\Request;
 
 /**
@@ -104,8 +105,15 @@ class OfferController extends Controller
     public function update(Request  $request, offer $offer)
     {
 
-        
-        $request->validate([
+        // $user=$request->user();
+
+        // if($user->id != $offer->user_id){
+        //      abort(401);
+        // }
+
+        $this->authorize('update','offer');
+
+        $validated =  $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'company_name' => 'required|string|max:255',
@@ -119,7 +127,7 @@ class OfferController extends Controller
             'image' => 'nullable|string|max:255',
         ]);
 
-        $offer->update($request->all());
+        $offer->update($validated);
 
         return response()->json([
            'offer' => "offer",

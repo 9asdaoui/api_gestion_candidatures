@@ -29,11 +29,12 @@ Route::post('login', [UserAuthController::class, 'login']);
 Route::post('logout', [UserAuthController::class, 'logout'])->middleware('auth:api');
 
 Route::apiResource('offers', OfferController::class)->middleware('auth:api');
+
+
 Route::apiResource('competences', CompetenceController::class)->middleware('auth:api');
 Route::apiResource('applications', ApplicationController::class)->middleware('auth:api');
 
 Route::get('showResume/{id}', [ApplicationController::class, 'showResume'])->middleware('auth:api');
-
 
 // Route::get('offers', [OfferController::class, 'index']);
 // Route::post('offers', [OfferController::class, 'store']);
@@ -42,8 +43,3 @@ Route::get('showResume/{id}', [ApplicationController::class, 'showResume'])->mid
 
 Route::get('profile', [UserProfileController::class, 'show'])->middleware('auth:api');
 Route::put('profile', [UserProfileController::class, 'update'])->middleware('auth:api');
-
-
-
-
-

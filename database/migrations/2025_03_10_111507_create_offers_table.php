@@ -24,7 +24,6 @@ return new class extends Migration
             $table->date('deadline')->nullable();
             $table->boolean('is_active')->default(true);
             $table->string('image')->nullable();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
