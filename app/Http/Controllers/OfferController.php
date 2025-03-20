@@ -110,7 +110,7 @@ class OfferController extends Controller
     public function update(Request  $request, offer $offer)
     {
              
-        $this->authorize('update', $offer);
+        // $this->authorize('update', $offer);
 
         $validated =  $request->validate([
             'title' => 'required|string|max:255',

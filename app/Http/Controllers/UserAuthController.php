@@ -67,7 +67,11 @@ class UserAuthController extends Controller
         return response()->json([
             'message' => 'Logged In',
             'access_token' => $token,
-        ]);
+            'token_type' => 'bearer',
+            'expires_in' => 60 * 60,
+            'user' => auth()->user(),
+        ],200);
+
     }
 
     /**
@@ -84,5 +88,29 @@ class UserAuthController extends Controller
         return response()->json([
             'message' => 'Logged Out'
         ]);
+    }
+
+       /**
+     * @OA\Post(
+     *     path="/api/refresh",
+     *     summary="Refresh JWT token",
+     *     @OA\Response(response=200, description="Token refreshed successfully"),
+     *     @OA\Response(response=401, description="Token refresh failed")
+     * )
+     */
+    public function refresh()
+    {
+        try {
+            $newToken = auth()->refresh();
+
+            return response()->json([
+                'message' => 'Token Refreshed',
+                'access_token' => $newToken,
+                'token_type' => 'bearer',
+                'expires_in' => auth()->factory()->getTTL() * 60,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Token Refresh Failed'], 401);
+        }
     }
 }

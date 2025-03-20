@@ -14,7 +14,16 @@ class OfferPolicy
      */
     public function before(User $user, $ability): ?bool
     {
-        if ($user->role->name === 'Admin') {
+        if ($user->role->name === 'Admin' && $ability == 'delete') {
+            return true;
+        }
+        
+        return null;
+    }
+    
+    public function after(User $user, $ability): ?bool
+    {
+        if ($user->role->name === 'Admin' && $ability == 'delete') {
             return true;
         }
         
