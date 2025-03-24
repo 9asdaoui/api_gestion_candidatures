@@ -37,31 +37,40 @@ class CompetenceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string',
+            'name' => 'required|array',
+            'name.*' => 'required|string|unique:competences,name',
         ]);
         
         try {
-            $competence = Competence::where('name', $request->name)->first();
+            $addedCompetences = [];
+            $user = Request()->user();
+            
+            foreach ($request->name as $competenceName) {
+            $competence = Competence::where('name', $competenceName)->first();
             
             if (!$competence) {
                 $competence = Competence::create([
-                    'name' => $request->name,
+                'name' => $competenceName,
                 ]);
             }
+            
 
-            $user = Request()->user();
-
-            $user->competences()->attach($competence->id);
+            $user->competences()->sync($competence->id);
+            
+            
+            $addedCompetences[] = $competence;
+            }
 
             return response()->json([
             'success' => true,
-            'message' => 'Competence assigned successfully',
-            'data' => $competence
+            'message' => 'Competences assigned successfully',
+            'data' => $addedCompetences
             ], 201);
+
         } catch (\Exception $e) {
             return response()->json([
             'success' => false,
-            'message' => 'Failed to assign competence',
+            'message' => 'Failed to assign competences',
             'error' => $e->getMessage()
             ], 500);
         }

@@ -21,7 +21,7 @@ use Illuminate\Http\Request;
  * )
  * 
  * @OA\SecurityScheme(
- *     securityScheme="sanctum",
+ *     securityScheme="jwt",
  *     type="http",
  *     scheme="bearer"
  * )
